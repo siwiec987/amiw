@@ -5,8 +5,6 @@ import WeatherForecast from './WeatherForecast';
 import { CiSearch } from "react-icons/ci";
 import './App.css';
 
-// aaaaaa
-
 const App = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [location, setLocation] = useState('');
@@ -19,7 +17,7 @@ const App = () => {
         params: {
           latitude,
           longitude,
-          daily: ['temperature_2m_min', 'temperature_2m_max', 'windspeed_10m_max', 'winddirection_10m_dominant'],
+          daily: ['weather_code', 'temperature_2m_min', 'temperature_2m_max', 'windspeed_10m_max', 'winddirection_10m_dominant'],
           current_weather: true,
           timezone: 'auto',
         },

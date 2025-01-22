@@ -14,6 +14,6 @@
     align-items: center;
   }
   
-  .weather-icon {
+  .weather-now-content .weather-icon {
     font-size: 100px;
   }

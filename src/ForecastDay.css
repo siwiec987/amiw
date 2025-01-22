@@ -4,4 +4,7 @@
     padding: 10px;
     text-align: center;
   }
-  
+
+  .forecast-day-content .weather-icon {
+    font-size: 60px;
+  }
