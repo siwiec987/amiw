@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import WeatherNow from './WeatherNow';
 import WeatherForecast from './WeatherForecast';
+import { CiSearch } from "react-icons/ci";
 import './App.css';
 
 const App = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [location, setLocation] = useState('');
+  const [cityName, setCityName] = useState('Sosnowiec');
   const [coordinates, setCoordinates] = useState({ latitude: 50.27, longitude: 19.16 }); // Domyślnie Sosnowiec
 
   const fetchWeather = async (latitude, longitude) => {
@@ -29,11 +31,12 @@ const App = () => {
   const fetchCoordinates = async () => {
     try {
       const response = await axios.get('https://geocoding-api.open-meteo.com/v1/search', {
-        params: { name: location },
+        params: {name: location},
       });
       if (response.data.results && response.data.results.length > 0) {
-        const { latitude, longitude } = response.data.results[0];
+        const {latitude, longitude, name} = response.data.results[0];
         setCoordinates({ latitude, longitude });
+        setCityName(name);
         fetchWeather(latitude, longitude);
       } else {
         alert('Nie znaleziono miejscowości!');
@@ -50,7 +53,6 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <h1>Prognoza Pogody</h1>
       <div className="location-search">
         <input
           type="text"
@@ -58,11 +60,11 @@ const App = () => {
           value={location}
           onChange={(e) => setLocation(e.target.value)}
         />
-        <button onClick={fetchCoordinates}>🔍</button>
+        <button className='search-button' onClick={fetchCoordinates}><CiSearch /></button>
       </div>
       {weatherData ? (
         <>
-          <WeatherNow currentWeather={weatherData.current_weather} />
+          <WeatherNow currentWeather={weatherData.current_weather} cityName={cityName}/>
           <WeatherForecast dailyForecast={weatherData.daily} />
         </>
       ) : (

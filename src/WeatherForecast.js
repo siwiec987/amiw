@@ -1,11 +1,11 @@
 import React from 'react';
 import ForecastDay from './ForecastDay';
-import './WeatherForecast.css'; // Stylizacja
+import './WeatherForecast.css';
 
 const WeatherForecast = ({ dailyForecast }) => {
   if (!dailyForecast) return null;
 
-  const { temperature_2m_min, temperature_2m_max, windspeed_10m_max, time, winddirection_10m_dominant } = dailyForecast;
+  const {temperature_2m_min, temperature_2m_max, windspeed_10m_max, time, winddirection_10m_dominant} = dailyForecast;
 
   return (
     <div className="weather-forecast">

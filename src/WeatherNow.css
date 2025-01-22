@@ -5,6 +5,7 @@
     margin: 10px auto;
     width: 90%;
     max-width: 500px;
+    text-align: center;
   }
   
   .weather-now-content {
@@ -13,3 +14,6 @@
     align-items: center;
   }
   
+  .weather-icon {
+    font-size: 100px;
+  }

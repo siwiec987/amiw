@@ -1,24 +1,25 @@
 import React from 'react';
-import './WeatherNow.css'; // Stylizacja komponentu
+import { TiWeatherSunny, TiWeatherPartlySunny, TiWeatherShower } from "react-icons/ti";
+import './WeatherNow.css';
 
-const WeatherNow = ({ currentWeather }) => {
+const WeatherNow = ({currentWeather, cityName}) => {
   if (!currentWeather) return null;
 
   const { temperature, windspeed, winddirection, weathercode } = currentWeather;
 
-  // Funkcja do interpretacji kodów pogodowych na ikony/tekst
+  // Funkcja do interpretacji kodów pogodowych na ikony
   const getWeatherIcon = (weatherCode) => {
     switch (weatherCode) {
       case 0:
-        return '☀️'; // Słonecznie
+        return <TiWeatherSunny />; // Słonecznie
       case 1:
       case 2:
       case 3:
-        return '🌤️'; // Częściowe zachmurzenie
+        return <TiWeatherPartlySunny />; // Częściowe zachmurzenie
       case 61:
       case 63:
       case 65:
-        return '🌧️'; // Deszcz
+        return <TiWeatherShower />; // Deszcz
       default:
         return '🌫️'; // Inne
     }
@@ -26,7 +27,7 @@ const WeatherNow = ({ currentWeather }) => {
 
   return (
     <div className="weather-now">
-      <h2>Aktualna pogoda</h2>
+      <h2>{cityName}</h2>
       <div className="weather-now-content">
         <div className="weather-icon">{getWeatherIcon(weathercode)}</div>
         <p>Temperatura: {temperature}°C</p>

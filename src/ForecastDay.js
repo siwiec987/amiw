@@ -1,5 +1,5 @@
 import React from 'react';
-import './ForecastDay.css'; // Stylizacja
+import './ForecastDay.css';
 
 const ForecastDay = ({ date, minTemp, maxTemp, windSpeed, windDirection }) => {
   return (
