@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import WeatherNow from './WeatherNow';
 import WeatherForecast from './WeatherForecast';
 import { CiSearch } from "react-icons/ci";
@@ -13,16 +12,11 @@ const App = () => {
 
   const fetchWeather = async (latitude, longitude) => {
     try {
-      const response = await axios.get('https://api.open-meteo.com/v1/forecast', {
-        params: {
-          latitude,
-          longitude,
-          daily: ['weather_code', 'temperature_2m_min', 'temperature_2m_max', 'windspeed_10m_max', 'winddirection_10m_dominant'],
-          current_weather: true,
-          timezone: 'auto',
-        },
-      });
-      setWeatherData(response.data);
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,is_day,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max,wind_direction_10m_dominant&timezone=auto`;
+      const response = await fetch(url);
+      const data = await response.json();
+      setWeatherData(data);
+      console.log(data.daily);
     } catch (error) {
       console.error('Błąd podczas pobierania danych pogodowych:', error);
     }
@@ -30,12 +24,12 @@ const App = () => {
 
   const fetchCoordinates = async () => {
     try {
-      const response = await axios.get('https://geocoding-api.open-meteo.com/v1/search', {
-        params: {name: location},
-      });
-      if (response.data.results && response.data.results.length > 0) {
-        const {latitude, longitude, name} = response.data.results[0];
-        setCoordinates({ latitude, longitude });
+      const url = `https://geocoding-api.open-meteo.com/v1/search?name=${location}&count=1`;
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data.results && data.results.length > 0) {
+        const {latitude, longitude, name} = data.results[0];
+        setCoordinates({latitude, longitude});
         setCityName(name);
         fetchWeather(latitude, longitude);
       } else {
@@ -64,7 +58,7 @@ const App = () => {
       </div>
       {weatherData ? (
         <>
-          <WeatherNow currentWeather={weatherData.current_weather} cityName={cityName}/>
+          <WeatherNow currentWeather={weatherData.current} cityName={cityName}/>
           <WeatherForecast dailyForecast={weatherData.daily} />
         </>
       ) : (
