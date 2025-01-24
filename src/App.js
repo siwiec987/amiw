@@ -3,12 +3,20 @@ import WeatherNow from './WeatherNow';
 import WeatherForecast from './WeatherForecast';
 import { CiSearch } from "react-icons/ci";
 import './App.css';
+import { createContext } from 'react';
+
+export const ThemeContext = createContext(null);
 
 const App = () => {
+  const [theme, setTheme] = useState("light");
   const [weatherData, setWeatherData] = useState(null);
   const [location, setLocation] = useState('');
   const [cityName, setCityName] = useState('Sosnowiec');
   const [coordinates, setCoordinates] = useState({ latitude: 50.27, longitude: 19.16 }); // Domyślnie Sosnowiec
+
+  const toggleTheme = () => {
+    setTheme((current) => (current === 'light' ? 'dark' : 'light'));
+  }
 
   const fetchWeather = async (latitude, longitude) => {
     try {
@@ -16,6 +24,7 @@ const App = () => {
       const response = await fetch(url);
       const data = await response.json();
       setWeatherData(data);
+      console.log(data.current);
       console.log(data.daily);
     } catch (error) {
       console.error('Błąd podczas pobierania danych pogodowych:', error);
@@ -41,30 +50,32 @@ const App = () => {
   };
 
   useEffect(() => {
-    // Pobieranie pogody dla domyślnej lokalizacji na start
     fetchWeather(coordinates.latitude, coordinates.longitude);
   }, [coordinates]);
 
   return (
-    <div className="app-container">
-      <div className="location-search">
-        <input
-          type="text"
-          placeholder="Wpisz nazwę miejscowości"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-        />
-        <button className='search-button' onClick={fetchCoordinates}><CiSearch /></button>
+    <ThemeContext.Provider value={{theme, toggleTheme}}>
+      <div className="app-container" id={theme}>
+        <div className="location-search">
+          <input
+            type="text"
+            placeholder="Wpisz nazwę miejscowości"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          />
+          <button className='search-button' onClick={fetchCoordinates}><CiSearch /></button>
+        </div>
+        <button className="theme-toggle-button" onClick={toggleTheme}></button>
+          {weatherData ? (
+            <>
+              <WeatherNow currentWeather={weatherData.current} cityName={cityName}/>
+              <WeatherForecast dailyForecast={weatherData.daily} />
+            </>
+          ) : (
+            <p>Ładowanie danych...</p>
+          )}
       </div>
-      {weatherData ? (
-        <>
-          <WeatherNow currentWeather={weatherData.current} cityName={cityName}/>
-          <WeatherForecast dailyForecast={weatherData.daily} />
-        </>
-      ) : (
-        <p>Ładowanie danych...</p>
-      )}
-    </div>
+    </ThemeContext.Provider>
   );
 };
 

@@ -5,19 +5,16 @@ import {getWeatherIcon} from './WeatherIcons';
 const WeatherNow = ({currentWeather, cityName}) => {
   if (!currentWeather) return null;
 
-    const isDay = currentWeather.is_day
-    const temperature = currentWeather.temperature_2m
-    const weatherCode = currentWeather.weather_code
-    const windSpeed = currentWeather.wind_speed_10m
-    const windDirection = currentWeather.wind_direction_10m
+    const {is_day, temperature_2m, weather_code, wind_speed_10m, wind_direction_10m, relative_humidity_2m} = currentWeather;
 
   return (
     <div className="weather-now">
       <h2>{cityName}</h2>
       <div className="weather-now-content">
-        <div className="weather-icon">{getWeatherIcon(weatherCode, isDay)}</div>
-        <p>Temperatura: {temperature}°C</p>
-        <p>Wiatr: {windSpeed} km/h, kierunek {windDirection}°</p>
+        <div className="weather-icon">{getWeatherIcon(weather_code, is_day)}</div>
+        <p>Temperatura: {temperature_2m}°C</p>
+        <p>Wilgotność: {relative_humidity_2m}%</p>
+        <p>Wiatr: {wind_speed_10m} km/h, kierunek {wind_direction_10m}°</p>
       </div>
     </div>
   );

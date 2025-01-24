@@ -1,8 +1,16 @@
 .forecast-day {
-    background: #ffe4c4;
     border-radius: 10px;
     padding: 10px;
     text-align: center;
+  }
+#light .forecast-day {
+    background: #f0f8ff;
+    color: #000;
+  }
+
+  #dark .forecast-day {
+    background: #333;
+    color: #fff;
   }
 
   .forecast-day-content .weather-icon {
