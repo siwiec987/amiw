@@ -2,7 +2,7 @@ import React from 'react';
 import ForecastDay from './ForecastDay';
 import './WeatherForecast.css';
 
-const WeatherForecast = ({ dailyForecast }) => {
+function WeatherForecast({ dailyForecast }) {
   if (!dailyForecast) return null;
 
   const {weather_code, temperature_2m_min, temperature_2m_max, wind_speed_10m_max, time, wind_direction_10m_dominant} = dailyForecast;

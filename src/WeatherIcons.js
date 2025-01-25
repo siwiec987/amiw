@@ -1,36 +1,46 @@
-import {WiDaySunny, WiDaySunnyOvercast, WiDayCloudy, WiFog, WiDayShowers, WiDayRain, WiSnowflakeCold, WiDayThunderstorm} from "react-icons/wi";
-import {WiNightClear, WiNightAltPartlyCloudy, WiNightAltCloudy, WiNightShowers, WiNightRain, WiNightThunderstorm} from "react-icons/wi";
+import {WiDaySunny, WiDaySunnyOvercast, WiCloudy, WiFog, WiDayShowers, WiDayRain, WiSnowflakeCold, WiDayThunderstorm, WiAlien} from "react-icons/wi";
+import {WiNightClear, WiNightAltPartlyCloudy, WiNightShowers, WiNightRain, WiNightThunderstorm} from "react-icons/wi";
 
-export const getWeatherIcon = (weatherCode, isDay) => {
-
+export function getWeatherIcon(weatherCode, isDay) {
     switch (weatherCode) {
-        case 0: // Clear sky
+        case 0:
+        case 1:
             return isDay ? <WiDaySunny /> : <WiNightClear />;
-        case 1: // Mainly clear
-            return isDay ? <WiDaySunnyOvercast /> : <WiNightAltPartlyCloudy />;
-        case 2: // Partly cloudy
-        case 3: // Overcast
-            return isDay ? <WiDayCloudy /> : <WiNightAltCloudy />;
-        case 45: // Fog
-        case 48: // Depositing rime fog
+        case 2:
+        return isDay ? <WiDaySunnyOvercast /> : <WiNightAltPartlyCloudy />;
+        case 3:
+            return <WiCloudy />;
+        case 45:
+        case 48:
             return <WiFog />;
-        case 51: // Drizzle: Light
-        case 53: // Drizzle: Moderate
-        case 55: // Drizzle: Dense intensity
+        case 51:
+        case 53:
+        case 55:
+        case 56:
+        case 57:
+        case 80:
+        case 81:
+        case 82:
             return isDay ? <WiDayShowers /> : <WiNightShowers />;
-        case 61: // Rain: Slight
-        case 63: // Rain: Moderate
-        case 65: // Rain: Heavy intensity
+        case 61:
+        case 63: 
+        case 65: 
+        case 66:
+        case 67:
             return isDay ? <WiDayRain /> : <WiNightRain />;
-        case 71: // Snow fall: Slight
-        case 73: // Snow fall: Moderate
-        case 75: // Snow fall: Heavy intensity
+        case 71:
+        case 73:
+        case 75:
+        case 77:
+        case 85:
+        case 86:
             return <WiSnowflakeCold />;
-        case 95: // Thunderstorm: Slight or moderate
-        case 96: // Thunderstorm with slight hail
-        case 99: // Thunderstorm with heavy hail
+        case 95:
+        case 96:
+        case 98:
+        case 99:
             return isDay ? <WiDayThunderstorm /> : <WiNightThunderstorm />;
         default:
-            return "unknown";
+            return <WiAlien />;
     }
 };

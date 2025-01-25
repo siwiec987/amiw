@@ -2,7 +2,7 @@ import React from 'react';
 import './ForecastDay.css';
 import {getWeatherIcon} from './WeatherIcons'
 
-const ForecastDay = ({date, weatherCode, minTemp, maxTemp, windSpeed, windDirection}) => {
+function ForecastDay({date, weatherCode, minTemp, maxTemp, windSpeed, windDirection}) {
   return (
     <div className="forecast-day">
       <h3>{new Date(date).toLocaleDateString()}</h3>
